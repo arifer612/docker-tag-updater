@@ -1,0 +1,7 @@
+#+TITLE: Docker Tag Updater
+
+[[LICENSE][https://img.shields.io/badge/license-GPL_3-green.svg]]
+[[https://develop.spacemacs.org][https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg]]
+
+Update Docker image semver tags in a Docker Compose file to the latest semver
+tags.
