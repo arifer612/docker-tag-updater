@@ -6,6 +6,7 @@ import subprocess
 from typing import Callable, Optional
 
 import semver
+
 from .helpers import RegexRules, parse_version, rules
 
 
