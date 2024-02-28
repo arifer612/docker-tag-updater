@@ -3,6 +3,7 @@
 import json
 import shutil
 import subprocess
+from typing import Callable
 
 
 def check_skopeo() -> None:
@@ -15,22 +16,33 @@ def check_skopeo() -> None:
         )
 
 
-def get_newest_version_label(
+def skopeo_inspect(
     image: str, registry: str = "docker.io", base_tag: str = "latest"
-) -> str:
-    """Get the most up-to-date version label of an image for the base tag."""
-    inspect_response = subprocess.run(
+) -> dict:
+    "Run skopeo inspect."
+    response = subprocess.run(
         ["skopeo", "inspect", "--config", f"docker://{registry}/{image}:{base_tag}"],
         stdout=subprocess.PIPE,
         check=True,
     )
-    inspect_dict = json.loads(inspect_response.stdout.decode())
-    if not inspect_dict:
+    json_response = json.loads(response.stdout.decode())
+    if not json_response:
         raise ValueError(
             f"The skopeo response for {registry}/{image}:{base_tag} is invalid."
         )
+    return json_response
+
+
+def get_newest_version_label(
+    image: str,
+    registry: str = "docker.io",
+    base_tag: str = "latest",
+    inspector: Callable = skopeo_inspect,
+) -> str:
+    """Get the container image version from its annotations."""
+    inspect_resp = inspector(image, registry, base_tag)
     try:
-        return inspect_dict["config"]["Labels"]["org.opencontainers.image.version"]
+        return inspect_resp["config"]["Labels"]["org.opencontainers.image.version"]
     except KeyError as exc:
         raise KeyError(
             f"The version label for {registry}/{image}:{base_tag} is not set."
