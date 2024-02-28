@@ -3,7 +3,10 @@
 import json
 import shutil
 import subprocess
-from typing import Callable
+from typing import Callable, Optional
+
+import semver
+from .helpers import RegexRules, parse_version, rules
 
 
 def check_skopeo() -> None:
@@ -47,3 +50,22 @@ def get_newest_version_label(
         raise KeyError(
             f"The version label for {registry}/{image}:{base_tag} is not set."
         ) from exc
+
+
+def compare_image_versions(
+    cur_ver: str,
+    new_ver: str,
+    registry: str,
+    regex_rules: RegexRules = rules,
+    strict: bool = False,
+) -> Optional[str]:
+    """Compare the current and newest semver, return the newest version."""
+    if cur_ver == new_ver:
+        return None
+
+    cur_semver = parse_version(cur_ver, regex_rules, registry)
+    new_semver = parse_version(new_ver, regex_rules, registry)
+
+    if semver.compare(new_semver, cur_semver) > 0:
+        return new_ver
+    return None
