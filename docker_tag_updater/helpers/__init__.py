@@ -2,6 +2,7 @@
 
 import re
 
+from .lscr import lscrRules
 from .regex_rules import DefaultRules, RegexRules
 
 
@@ -18,3 +19,6 @@ def parse_version(
         regex_rules[rule]["replacement"] or regex_rules["default"]["replacement"]
     )
     return re.sub(raw_pattern, replacement, ver)
+
+
+rules = DefaultRules + lscrRules
