@@ -3,7 +3,7 @@
 import json
 import shutil
 import subprocess
-from typing import Callable, Optional
+from typing import Callable, Never, Optional
 
 import semver
 
@@ -20,21 +20,39 @@ def check_skopeo() -> None:
         )
 
 
+def failed_skopeo_response(
+    image: str, registry: str, base_tag: str, exc: Exception = ValueError()
+) -> Never:
+    raise ValueError(
+        f"The skopeo response for {registry}/{image}:{base_tag} is invalid."
+    ) from exc
+
+
 def skopeo_inspect(
-    image: str, registry: str = "docker.io", base_tag: str = "latest"
+    image: str,
+    registry: str = "docker.io",
+    base_tag: str = "latest",
+    verbose: bool = False,
 ) -> dict:
     "Run skopeo inspect."
-    response = subprocess.run(
-        ["skopeo", "inspect", "--config", f"docker://{registry}/{image}:{base_tag}"],
-        stdout=subprocess.PIPE,
-        check=True,
-    )
-    json_response = json.loads(response.stdout.decode())
-    if not json_response:
-        raise ValueError(
-            f"The skopeo response for {registry}/{image}:{base_tag} is invalid."
+    try:
+        response = subprocess.run(
+            [
+                "skopeo",
+                "inspect",
+                "--config",
+                f"docker://{registry}/{image}:{base_tag}",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=None if verbose else subprocess.DEVNULL,
+            check=True,
         )
-    return json_response
+        json_response = json.loads(response.stdout.decode())
+        if not json_response:
+            failed_skopeo_response(image, registry, base_tag)
+        return json_response
+    except subprocess.CalledProcessError as exc:
+        failed_skopeo_response(image, registry, base_tag, exc)
 
 
 def get_newest_version_label(
