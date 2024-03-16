@@ -21,9 +21,9 @@ class RegexRules(dict):
 
     def has_rule(self, rule) -> bool:
         """Check if the rule exists or is an alias."""
-        if rule not in self.keys() or rule not in self._rule_aliases:
-            return False
-        return True
+        if (rule in self.keys()) or (rule in self._rule_aliases):
+            return True
+        return False
 
     def __add__(self, other_rules: RegexRules) -> RegexRules:
         ### for existing rule key, new rule takes precedence.
@@ -44,8 +44,7 @@ class RegexRules(dict):
 DefaultRules = RegexRules(
     {
         "default": {
-            "raw_pattern": r"(\d+)\.(\d+)\.(\d+)\..*",
-            "replacement": r"\1.\2.\3",
+            "raw_pattern": r"v?(?:ersion-)?(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+).*",
         }
     }
 )
