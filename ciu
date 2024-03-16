@@ -1,0 +1,31 @@
+#! /usr/bin/env python
+"""CIU -- Compose Image Updater main script"""
+
+from docker_tag_updater import skopeo, parser
+
+
+args = parser.ciu_parser.parse_args()
+
+def main():
+
+    if args.command in ['inspect', 'i']:
+        registry, image, _ = skopeo.parse(args.image)
+        print(
+            skopeo.image_version(
+                image,
+                registry=registry,
+                base_tag=args.tag,
+            )
+        )
+    elif args.command in ['compare', 'c']:
+        registry, image, tag = skopeo.parse(args.current)
+        latest_tag = skopeo.compare_versions(
+                cur_ver=tag,
+                new_ver=args.newest,
+                rule=args.rule
+            )
+        print(args.current.replace(tag, latest_tag))
+
+
+if __name__ == '__main__':
+    main()

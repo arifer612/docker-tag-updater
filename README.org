@@ -5,3 +5,21 @@
 
 Update Docker image semver tags in a Docker Compose file to the latest semver
 tags.
+
+
+** Usage
+
+To get the most recent version of the image =john-doe/hello-world= hosted on the
+registry =registry.io= with the tag =develop=, you can do the following
+#+BEGIN_EXAMPLE shell
+  $ ciu inspect registry.io/john-doe/hello-world -t develop
+  >> v1.5.2
+#+END_EXAMPLE
+
+Suppose that in the Docker Compose file, a service using =john-doe/hello-world=
+is tagged with the version =v1.2.3=. To compare that with the result above, you
+can do the following
+#+BEGIN_EXAMPLE shell
+  $ ciu compare registry.io/john-doe/hello-world:v1.2.3 v1.5.2
+  >> registry.io/john-doe/hello-world:v1.5.2
+#+END_EXAMPLE
