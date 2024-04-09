@@ -1,4 +1,8 @@
-"""Dictionary object for version parsing using regex."""
+"""Dictionary object for version parsing using regex.
+
+This module defines the most fundamental object that is used by all other modules of
+this subpackage.
+"""
 from __future__ import annotations
 
 

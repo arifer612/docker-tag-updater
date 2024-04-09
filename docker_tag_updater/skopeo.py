@@ -1,4 +1,7 @@
-"""Tools for Skopeo."""
+"""Tools for Skopeo.
+
+This module defines the functions that are used for the CLI tool (image-version-checker).
+"""
 
 import json
 import subprocess
