@@ -3,7 +3,7 @@
 
 Check for new versions of a container image.
 """
-
+import sys
 from docker_tag_updater import skopeo, parser
 
 
@@ -12,6 +12,10 @@ args = parser.ivc_parser.parse_args()
 
 def main():
     registry, image, tag = skopeo.parse(args.image)
+    if args.parse:
+        print(f"{registry} {image} {tag}")
+        sys.exit(0)
+
     skopeo_tag = skopeo.image_version(
         image, registry=registry, base_tag=args.tag, verbose=args.verbose
     )

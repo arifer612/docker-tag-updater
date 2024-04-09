@@ -50,6 +50,12 @@ ivc_parser.add_argument(
     default="default",
 )
 ivc_parser.add_argument(
+    "-P",
+    "--parse",
+    action="store_true",
+    help="Get the parsed image information, i.e., the registry, image name, and tag."
+)
+ivc_parser.add_argument(
     "-v",
     "--verbose",
     action="store_true",
