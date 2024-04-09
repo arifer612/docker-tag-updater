@@ -2,19 +2,73 @@
 
 import json
 import subprocess
-from typing import Callable, Never, Optional
+from typing import Callable, Never
 
 import semver
 
-from .helpers import RegexRules, parse_version, rules
+from .helpers import parse_version
 
 
-def failed_response(
+def _failed_response(
     image: str, registry: str, base_tag: str, exc: Exception = ValueError()
 ) -> Never:
+    """Handle a failed Skopeo response.
+
+    Parameters
+    ----------
+    image
+        The name of the container image.
+    registry
+        The registry hosting the container image.
+    base_tag
+        The tag of the container image.
+    exc
+        The Exeception that caught the failed response.
+
+    Raises
+    ------
+    ValueError
+        Handles any caught exceptions and raises it as a ValueError for the user to
+        troubleshoot or debug if need be.
+
+    """
     raise ValueError(
         f"The skopeo response for {registry}/{image}:{base_tag} is invalid."
     ) from exc
+
+
+def parse(image_string: str) -> tuple[str, str, str]:
+    """Parse the image string to get its registry, image, and tag.
+
+    Parameters
+    ----------
+    image_string
+        The container image possibly with the registry and tag included.
+
+    Returns
+    -------
+    tuple of str
+        The registry, image, and tag as a tuple.
+
+    Examples
+    --------
+    >>> _parse('hello-world')
+    ('docker.io', 'hello-world', 'latest')
+
+    >>> _parse('lscr.io/linuxserver/mariadb:10.11.6-r0-ls136')
+    ('lscr.io', 'linuxserver/mariadb', '10.11.6-r0-ls136')
+
+    """
+    if ":" in image_string:
+        image_string, tag = image_string.split(":", 1)
+    else:
+        tag = "0"
+    if (image_string.count("/") > 1) or ".io" in image_string:
+        registry, *image_string_list = image_string.split("/")
+        image_string = "/".join(image_string_list)
+    else:
+        registry = "docker.io"
+    return (registry, image_string, tag)
 
 
 def inspect(
@@ -23,7 +77,28 @@ def inspect(
     base_tag: str = "latest",
     verbose: bool = False,
 ) -> dict:
-    "Run skopeo inspect."
+    """Run 'skopeo inspect'.
+
+    A container image will be queried by skopeo and the contents of the inspection will
+    be returned as a dictionary as-is.
+
+    Parameters
+    ----------
+    image
+        The name of the container image.
+    registry
+        The registry hosting the container image.
+    base_tag
+        The tag of the container image.
+    verbose
+        Print out the error messages from the skopeo process to STDERR if True.
+
+    Returns
+    -------
+    dict
+        The result of the skopeo process as a dictionary.
+
+    """
     try:
         response = subprocess.run(
             [
@@ -38,24 +113,10 @@ def inspect(
         )
         json_response = json.loads(response.stdout.decode())
         if not json_response:
-            failed_response(image, registry, base_tag)
+            _failed_response(image, registry, base_tag)
         return json_response
     except subprocess.CalledProcessError as exc:
-        failed_response(image, registry, base_tag, exc)
-
-
-def parse(image_string: str) -> tuple:
-    """Parse the image string to get its registry, image, and tag."""
-    if ":" in image_string:
-        image_string, tag = image_string.split(':', 1)
-    else:
-        tag = '0'
-    if image_string.count('/') > 1:
-        registry, *image_string_list = image_string.split('/')
-        image_string = '/'.join(image_string_list)
-    else:
-        registry = 'docker.io'
-    return (registry, image_string, tag)
+        _failed_response(image, registry, base_tag, exc)
 
 
 def image_version(
@@ -64,7 +125,44 @@ def image_version(
     base_tag: str = "latest",
     inspector: Callable = inspect,
 ) -> str:
-    """Get the container image version from its annotations."""
+    """Get the container image version from its annotations.
+
+    Parameters
+    ----------
+    image
+        The container image, e.g., hello-world.
+    registry
+        The registry where the image is hosted on.
+    base_tag
+        The name of the base tag to refer against.
+    inspector
+        The inspection method.
+
+    Returns
+    -------
+        The most up-to-date version of the image with the specified tag on the
+        specified registry.
+
+    Raises
+    ------
+    KeyError
+        If annotations of the container image is not set.
+
+    Examples
+    --------
+    The current tagged version of traefik is v2.11.0. This is also reflected in
+    their annotated Docker container image.
+
+    >>> image_version("traefik")
+    v2.11.0
+
+    On the other hand, the official hello-world Docker container image does not
+    have the right annotations. It will raise a KeyError.
+
+    >>> image_version("hello-world")
+    KeyError: 'The version label for docker.io/hello-world:latest is not set.'
+
+    """
     inspect_resp = inspector(image, registry, base_tag)
     try:
         return inspect_resp["config"]["Labels"]["org.opencontainers.image.version"]
@@ -75,18 +173,51 @@ def image_version(
 
 
 def compare_versions(
-    cur_ver: str,
-    new_ver: str,
-    rule: str = 'default',
+    source_ver: str,
+    target_ver: str,
+    rule: str = "default",
     strict: bool = False,
 ) -> str:
-    """Compare the current and newest semver, return the newest version."""
-    if cur_ver == new_ver:
-        return cur_ver
+    """Compare the current and newest semver, return the neweset version.
 
-    cur_semver = parse_version(cur_ver, rule=rule)
-    new_semver = parse_version(new_ver, rule=rule)
+    The comparision will be done using the python-semver package. A simple comparison of
+    the major, minor, and patch versions only, is implemented in this version.
 
-    if semver.Version(**new_semver) > semver.Version(**cur_semver):
-        return new_ver
-    return cur_ver
+    Parameters
+    ----------
+    source_ver
+        The semver string of the source.
+    target_ver
+        The semver string of the target.
+    rule
+        Name of the helpers.RegexRules to parse these semver strings.
+    strict
+        (Currently unimplemented)
+
+    Returns
+    -------
+        The most up-to-date semver string.
+
+    Examples
+    --------
+    >>> compare_versions("v1.2.3", "v1.2.4", rule="default")
+    v1.2.4
+
+    >>> compare_versions("v1.2.4", "v1.2.3", rule="default")
+    v1.2.4
+
+    Comparing linuxserver semver strings will only consider up to its patch version.
+
+    >>> compare_versions("v1.2.3.456-ls789", "v1.2.3.456-ls798", rule="lscr")
+    v1.2.3.456-ls789
+
+    """
+    if source_ver == target_ver:
+        return source_ver
+
+    source_semver = parse_version(source_ver, rule_name=rule)
+    target_semver = parse_version(target_ver, rule_name=rule)
+
+    if semver.Version(**target_semver) > semver.Version(**source_semver):
+        return target_ver
+    return source_ver

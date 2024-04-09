@@ -20,8 +20,8 @@ def main():
     elif args.command in ['compare', 'c']:
         registry, image, tag = skopeo.parse(args.current)
         latest_tag = skopeo.compare_versions(
-                cur_ver=tag,
-                new_ver=args.newest,
+                source_ver=tag,
+                target_ver=args.newest,
                 rule=args.rule
             )
         print(args.current.replace(tag, latest_tag))
