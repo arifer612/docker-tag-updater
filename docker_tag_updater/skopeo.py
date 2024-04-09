@@ -124,6 +124,7 @@ def image_version(
     registry: str = "docker.io",
     base_tag: str = "latest",
     inspector: Callable = inspect,
+    verbose: bool = False,
 ) -> str:
     """Get the container image version from its annotations.
 
@@ -137,6 +138,8 @@ def image_version(
         The name of the base tag to refer against.
     inspector
         The inspection method.
+    verbose
+        Specify the verbosity of the inspector function.
 
     Returns
     -------
@@ -163,9 +166,15 @@ def image_version(
     KeyError: 'The version label for docker.io/hello-world:latest is not set.'
 
     """
-    inspect_resp = inspector(image, registry, base_tag)
+    if verbose:
+        print(f"Inspecting {image} tagged with {base_tag} on {registry}")
+
+    inspect_resp = inspector(image, registry, base_tag, verbose)
     try:
-        return inspect_resp["config"]["Labels"]["org.opencontainers.image.version"]
+        version = inspect_resp["config"]["Labels"]["org.opencontainers.image.version"]
+        if verbose:
+            print(f"The latest version of {base_tag} for {image} is {version}.")
+        return version
     except KeyError as exc:
         raise KeyError(
             f"The version label for {registry}/{image}:{base_tag} is not set."
@@ -177,6 +186,7 @@ def compare_versions(
     target_ver: str,
     rule: str = "default",
     strict: bool = False,
+    verbose: bool = False,
 ) -> str:
     """Compare the current and newest semver, return the neweset version.
 
@@ -193,6 +203,8 @@ def compare_versions(
         Name of the helpers.RegexRules to parse these semver strings.
     strict
         (Currently unimplemented)
+    verbose
+        Specify the verbosity of the inspector function.
 
     Returns
     -------
@@ -212,6 +224,9 @@ def compare_versions(
     v1.2.3.456-ls789
 
     """
+    if verbose:
+        print(f"Comparing {source_ver} against {target_ver}...")
+
     if source_ver == target_ver:
         return source_ver
 
