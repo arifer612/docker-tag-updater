@@ -86,5 +86,5 @@ COPY --from=builder-base $VIRTUAL_ENV $VIRTUAL_ENV
 WORKDIR /app
 COPY . ./
 COPY image-version-checker /usr/local/bin/image-version-checker
-COPY updater.sh /usr/local/bin/updater
-ENTRYPOINT ["/usr/local/bin/updater"]
+COPY compose-updater.sh /usr/local/bin/compose-updater
+ENTRYPOINT ["/usr/local/bin/compose-updater"]
