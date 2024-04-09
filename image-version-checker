@@ -1,10 +1,13 @@
 #! /usr/bin/env python
-"""CIU -- Compose Image Updater main script"""
+"""image-version-checker
+
+Check for new versions of a container image.
+"""
 
 from docker_tag_updater import skopeo, parser
 
 
-args = parser.ciu_parser.parse_args()
+args = parser.ivc_parser.parse_args()
 
 
 def main():
