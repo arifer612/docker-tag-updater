@@ -200,7 +200,7 @@ def compare_versions(
     target_ver
         The semver string of the target.
     rule
-        Name of the helpers.RegexRules to parse these semver strings.
+        Name of the ``RegexRules`` rule to parse these semver strings.
     strict
         (Currently unimplemented)
     verbose
@@ -209,6 +209,10 @@ def compare_versions(
     Returns
     -------
         The most up-to-date semver string.
+
+    See also
+    --------
+    docker_tag_updater.helpers.regex_rules : For more information about ``RegexRules``.
 
     Examples
     --------
