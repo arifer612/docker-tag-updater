@@ -6,26 +6,20 @@ from docker_tag_updater import skopeo, parser
 
 args = parser.ciu_parser.parse_args()
 
+
 def main():
+    registry, image, tag = skopeo.parse(args.image)
+    skopeo_tag = skopeo.image_version(
+        image, registry=registry, base_tag=args.tag, verbose=args.verbose
+    )
 
-    if args.command in ['inspect', 'i']:
-        registry, image, _ = skopeo.parse(args.image)
-        print(
-            skopeo.image_version(
-                image,
-                registry=registry,
-                base_tag=args.tag,
-            )
-        )
-    elif args.command in ['compare', 'c']:
-        registry, image, tag = skopeo.parse(args.current)
-        latest_tag = skopeo.compare_versions(
-                source_ver=tag,
-                target_ver=args.newest,
-                rule=args.rule
-            )
-        print(args.current.replace(tag, latest_tag))
+    newest_tag = skopeo.compare_versions(
+        source_ver=tag, target_ver=skopeo_tag, rule=args.rule
+    )
+    if args.verbose:
+        print("The most up-to-date tagged image is:")
+    print(args.image.replace(tag, newest_tag))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
