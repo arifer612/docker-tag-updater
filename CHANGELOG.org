@@ -1,0 +1,46 @@
+* Changelog
+All notable changes to this project will be documented in this file. See
+[[https://github.com/absolute-version/commit-and-tag-version][commit-and-tag-version]]
+for commit guidelines.
+
+** 1.0.0 (2024-04-14)
+*** ⚠ BREAKING CHANGES
+- rename ciu to image/version/checker
+- make script basic
+- remove subparsers, make parser basic
+
+*** Features
+- add a Docker image
+  ([[https://github.com/arifer612/docker-tag-updater/commit/574f48f5cbd05ffb6f7fd068a8d064bddcece2ab][574f48f]])
+- add helpers module to manage version regex rules
+  ([[https://github.com/arifer612/docker-tag-updater/commit/4fb1a169c44208654304178490c4aff04fc1b481][4fb1a16]])
+- add lscr regex rules
+  ([[https://github.com/arifer612/docker-tag-updater/commit/16be60661a29d0e3afa1aa94550ae18807cdc3ca][16be606]])
+- add parser module
+  ([[https://github.com/arifer612/docker-tag-updater/commit/0b5c99c0c9a74ee0201c691393a440eb520d2ee7][0b5c99c]])
+- add the main library to get latest version label
+  ([[https://github.com/arifer612/docker-tag-updater/commit/1c51ddcece453e74a0a82ee99ee22cdbc395f397][1c51ddc]])
+- add verbosity to several user-callable functions
+  ([[https://github.com/arifer612/docker-tag-updater/commit/fd6c16f7c83e9c249c833812fae333547e279e4b][fd6c16f]])
+- initialise the project
+  ([[https://github.com/arifer612/docker-tag-updater/commit/78d6962526a9133f7c5d2b3fc8e0ab35ec779636][78d6962]])
+- make script basic
+  ([[https://github.com/arifer612/docker-tag-updater/commit/77c1f0d3dd905c6783f1f94c39fecc9aa06148bf][77c1f0d]])
+- new ciu script and add its documentation in the README
+  ([[https://github.com/arifer612/docker-tag-updater/commit/013ba8562e7a512672f1733ce9b8a0b1d5be267d][013ba85]])
+- new function to compare image versions
+  ([[https://github.com/arifer612/docker-tag-updater/commit/74d1fc99a28f7a6c69913ff208aaa221713bfd40][74d1fc9]])
+- remove subparsers, make parser basic
+  ([[https://github.com/arifer612/docker-tag-updater/commit/9bb845393648f5b8f160d0d14482b123db18fc5e][9bb8453]])
+- rename ciu to image/version/checker
+  ([[https://github.com/arifer612/docker-tag-updater/commit/cf5c41f1a8a65fa59726af1866c926d7e8fe0e63][cf5c41f]])
+- rename updater script add proper usage message for it
+  ([[https://github.com/arifer612/docker-tag-updater/commit/9e96fa21d0081046cca28db75506ff5a21f918a9][9e96fa2]])
+- script to add flag to just parse the image string
+  ([[https://github.com/arifer612/docker-tag-updater/commit/e60dc6f89cc734d2b6a212d934989b4193bed04d][e60dc6f]])
+
+*** Bug Fixes
+- catch failed skopeo inspect processes properly
+  ([[https://github.com/arifer612/docker-tag-updater/commit/470a633973587c76b71d101b33f7997a01fa6f68][470a633]])
+- use most general rule as default RegexRules object
+  ([[https://github.com/arifer612/docker-tag-updater/commit/e130eb68305170cfa9c31eaaa97db2f5975f57ea][e130eb6]])
