@@ -7,8 +7,23 @@ from .regex_rules import DefaultRules, RegexRules
 from typing import Any
 
 
+rules: RegexRules = DefaultRules + lscrRules
+"""The most general set of rules.
+
+Supports:
+
+- Default semantic versions
+- Linuxserver semantic versions
+
+See also
+--------
+regex_rules.DefaultRules : For the aliases for the default set of rules.
+lscr.lscrRules : For the aliases for the Linuxserver set of rules.
+
+"""
+
 def parse_version(
-    version: str, rules: RegexRules = DefaultRules, rule_name: str = "default"
+    version: str, rules: RegexRules = rules, rule_name: str = "default"
 ) -> dict[str, Any]:
     """Parse the version according to a regex rule.
 
@@ -43,7 +58,8 @@ def parse_version(
 
     See Also
     --------
-    regex_rules.RegexRules
+    regex_rules.RegexRules : For how the rules are generated.
+    rules : For the default set of rules that will be used.
     """
     if not rules.has_rule(rule_name):
         raise KeyError(f"{rule_name} is not a valid rule or does not exist as a rule.")
@@ -55,6 +71,3 @@ def parse_version(
         # Try with the default rule if all else fails
         return parse_version(version, rules, "default")
     raise ValueError(f"The {rule_name} rule cannot parse the version string {version}.")
-
-
-rules = DefaultRules + lscrRules
