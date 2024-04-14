@@ -2,7 +2,7 @@
 
 from .regex_rules import RegexRules
 
-lscrRules = RegexRules(
+lscrRules: RegexRules = RegexRules(
     rules={
         "lscr": r"v?(?:ersion-)?(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)"
         r"(?:\.(?P<prerelease>\d+))?(?:-ls(?P<build>\d+))?",

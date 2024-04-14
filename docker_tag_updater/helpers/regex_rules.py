@@ -149,7 +149,7 @@ class RegexRules(dict):
             self._rule_aliases[alias] = main_rule
 
 
-DefaultRules = RegexRules(
+DefaultRules: RegexRules = RegexRules(
     rules = {
         "default": r"v?(?:ersion-)?(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+).*",
     }
