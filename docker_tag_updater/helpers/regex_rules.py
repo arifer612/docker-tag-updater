@@ -37,7 +37,7 @@ class RegexRules(dict):
 
     def __init__(self, rules: dict[str, str]):
         dict.__init__(self, **rules)
-        self._rule_aliases = {}
+        self._rule_aliases: dict[str, str] = {}
 
     def __getitem__(self, rule):
         return dict.__getitem__(self, self._rule_aliases.get(rule, rule))
@@ -46,9 +46,9 @@ class RegexRules(dict):
         return dict.__setitem__(self, self._rule_aliases.get(rule, rule), value)
 
     def __repr__(self):
-        return f"RegexRules[{' '.join([rule for rule in self.keys()])}]"
+        return f"RegexRules[{' '.join(list(self.keys()))}]"
 
-    def get(self, rule: str) -> str:
+    def get(self, rule: str) -> str:  # type: ignore[override]
         """Redefine the get function.
 
         Parameters
@@ -65,7 +65,7 @@ class RegexRules(dict):
         >>> rules.get('default')
         'v?(?:ersion-)?(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+).*'
         """
-        return self.__getitem__(rule)
+        return self[rule]
 
     def has_rule(self, rule: str) -> bool:
         """Check if the rule exists or is an alias.
@@ -103,7 +103,7 @@ class RegexRules(dict):
         >>> defaultRules + lscrRules
         {
             'default': 'v?(?:ersion-)?(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+).*',
-            'lscr': 'v?(?:ersion-)?(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(?:\\.(?P<prerelease>\\d+))?(?:-ls(?P<build>\\d+))?',
+            'lscr': 'v?(?:ersion-)?(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(?:\\.(?P<prerelease>\\d+))?(?:-ls(?P<build>\\d+))?',  # pylint: disable=line-too-long
         }
 
         Adding a RegexRules with the same name produces a RegexRules with only
@@ -150,7 +150,7 @@ class RegexRules(dict):
 
 
 DefaultRules: RegexRules = RegexRules(
-    rules = {
+    rules={
         "default": r"v?(?:ersion-)?(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+).*",
     }
 )

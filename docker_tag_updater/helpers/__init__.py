@@ -1,11 +1,10 @@
 """A set of helpers."""
 
 import re
+from typing import Any
 
 from .lscr import lscrRules
 from .regex_rules import DefaultRules, RegexRules
-from typing import Any
-
 
 rules: RegexRules = DefaultRules + lscrRules
 """The most general set of rules.
@@ -22,8 +21,9 @@ lscr.lscrRules : For the aliases for the Linuxserver set of rules.
 
 """
 
+
 def parse_version(
-    version: str, rules: RegexRules = rules, rule_name: str = "default"
+    version: str, rule_set: RegexRules = rules, rule_name: str = "default"
 ) -> dict[str, Any]:
     """Parse the version according to a regex rule.
 
@@ -61,13 +61,13 @@ def parse_version(
     regex_rules.RegexRules : For how the rules are generated.
     rules : For the default set of rules that will be used.
     """
-    if not rules.has_rule(rule_name):
+    if not rule_set.has_rule(rule_name):
         raise KeyError(f"{rule_name} is not a valid rule or does not exist as a rule.")
-    rule_rx = rules[rule_name]
+    rule_rx = rule_set[rule_name]
     match_pattern = re.fullmatch(rule_rx, version)
     if match_pattern:
         return match_pattern.groupdict("0")
     if rule_name != "default":
         # Try with the default rule if all else fails
-        return parse_version(version, rules, "default")
+        return parse_version(version, rule_set, "default")
     raise ValueError(f"The {rule_name} rule cannot parse the version string {version}.")

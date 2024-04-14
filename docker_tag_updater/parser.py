@@ -35,7 +35,8 @@ ivc_parser.add_argument(
     "image",
     help="""The name of the image that will be checked.
     Example: docker.io/alpine:3.19.1
-    """)
+    """,
+)
 ivc_parser.add_argument(
     "-t",
     "--tag",
@@ -53,7 +54,7 @@ ivc_parser.add_argument(
     "-P",
     "--parse",
     action="store_true",
-    help="Get the parsed image information, i.e., the registry, image name, and tag."
+    help="Get the parsed image information, i.e., the registry, image name, and tag.",
 )
 ivc_parser.add_argument(
     "-v",

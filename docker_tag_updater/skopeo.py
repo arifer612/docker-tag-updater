@@ -12,34 +12,6 @@ import semver
 from .helpers import parse_version
 
 
-def _failed_response(
-    image: str, registry: str, base_tag: str, exc: Exception = ValueError()
-) -> Never:
-    """Handle a failed Skopeo response.
-
-    Parameters
-    ----------
-    image
-        The name of the container image.
-    registry
-        The registry hosting the container image.
-    base_tag
-        The tag of the container image.
-    exc
-        The Exeception that caught the failed response.
-
-    Raises
-    ------
-    ValueError
-        Handles any caught exceptions and raises it as a ValueError for the user to
-        troubleshoot or debug if need be.
-
-    """
-    raise ValueError(
-        f"The skopeo response for {registry}/{image}:{base_tag} is invalid."
-    ) from exc
-
-
 def parse(image_string: str) -> tuple[str, str, str]:
     """Parse the image string to get its registry, image, and tag.
 
@@ -102,6 +74,33 @@ def inspect(
         The result of the skopeo process as a dictionary.
 
     """
+    def _failed_response(
+        image: str, registry: str, base_tag: str, exc: Exception = ValueError()
+    ) -> Never:
+        """Handle a failed Skopeo response.
+
+        Parameters
+        ----------
+        image
+            The name of the container image.
+        registry
+            The registry hosting the container image.
+        base_tag
+            The tag of the container image.
+        exc
+            The Exeception that caught the failed response.
+
+        Raises
+        ------
+        ValueError
+            Handles any caught exceptions and raises it as a ValueError for the user to
+            troubleshoot or debug if need be.
+
+        """
+        raise ValueError(
+            f"The skopeo response for {registry}/{image}:{base_tag} is invalid."
+        ) from exc
+
     try:
         response = subprocess.run(
             [
@@ -188,7 +187,6 @@ def compare_versions(
     source_ver: str,
     target_ver: str,
     rule: str = "default",
-    strict: bool = False,
     verbose: bool = False,
 ) -> str:
     """Compare the current and newest semver, return the neweset version.
@@ -204,8 +202,6 @@ def compare_versions(
         The semver string of the target.
     rule
         Name of the ``RegexRules`` rule to parse these semver strings.
-    strict
-        (Currently unimplemented)
     verbose
         Specify the verbosity of the inspector function.
 
