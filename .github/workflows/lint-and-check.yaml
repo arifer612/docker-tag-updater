@@ -1,0 +1,50 @@
+---
+name: Code linting and checking
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+    paths:
+      - "**.py"
+      - ".github/workflows/lint-and-check.yaml"
+      - "image-version-checker"
+  pull_request:
+  workflow_dispatch:
+
+env:
+  MODULES: docker_tag_updater
+  CODECOV_UPLOAD: ${{ vars.CODECOV_UPLOAD }}
+
+jobs:
+  lint-and-check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.11"
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Setup Python, Poetry and Dependencies
+        uses: packetcoders/action-setup-cache-python-poetry@main
+        with:
+          python-version: ${{ matrix.python-version }}
+          poetry-version: 1.3.2
+
+      - name: Lint code
+        run: poetry run pylint "$MODULES"
+      - name: Check static typing
+        if: always()
+        run: poetry run mypy "$MODULES"
+      - name: Test code
+        if: always()
+        run: poetry run pytest --cov --cov-report=xml
+      - name: Upload to Codecov
+        if: ${{ env.CODECOV_UPLOAD == 'true' }}
+        uses: codecov/codecov-action@v3
