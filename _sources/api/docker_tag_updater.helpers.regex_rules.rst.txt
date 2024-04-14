@@ -1,0 +1,7 @@
+:mod:`docker_tag_updater.helpers.regex_rules`
+=============================================
+
+.. automodule:: docker_tag_updater.helpers.regex_rules
+   :members:
+   :undoc-members:
+   :show-inheritance:

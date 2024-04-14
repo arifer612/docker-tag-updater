@@ -1,0 +1,27 @@
+:mod:`docker_tag_updater`
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   docker_tag_updater.helpers
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   docker_tag_updater.parser
+   docker_tag_updater.skopeo
+
+Module contents
+---------------
+
+.. automodule:: docker_tag_updater
+   :members:
+   :undoc-members:
+   :show-inheritance:

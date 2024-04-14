@@ -1,0 +1,7 @@
+:mod:`docker_tag_updater.skopeo`
+================================
+
+.. automodule:: docker_tag_updater.skopeo
+   :members:
+   :undoc-members:
+   :show-inheritance:
