@@ -36,6 +36,10 @@ EOF
     exit 1
 }
 
+# for debugging
+echo "$@"
+exit 1
+
 IMAGE_NAME=""
 BASE_TAG="latest"
 RULE="default"
