@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "docker-tag-updater"
-version = "1.0.0"
+version = "1.0.1"
 description = "Update to the latest Docker image semver tag."
 authors = ["Arif Er <arifer612@proton.me>"]
 license = "GPLv3"

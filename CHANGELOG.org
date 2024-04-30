@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file. See
 [[https://github.com/absolute-version/commit-and-tag-version][commit-and-tag-version]]
 for commit guidelines.
 
+** [[https://github.com/arifer612/docker-tag-updater/compare/v1.0.0...v1.0.1][1.0.1]]
+(2024-04-30)
+*** Bug Fixes
+- hyphenate image name and version
+  ([[https://github.com/arifer612/docker-tag-updater/commit/40eb1ea740c6401fdee67693eed8f7afef75d943][40eb1ea]])
+- typo in sphinx index template
+  ([[https://github.com/arifer612/docker-tag-updater/commit/31c2445bd757908f2c3ab0511f87fc0bfeb4979f][31c2445]])
+
 ** 1.0.0 (2024-04-14)
 *** ⚠ BREAKING CHANGES
 - rename ciu to image/version/checker
