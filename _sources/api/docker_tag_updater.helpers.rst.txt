@@ -7,6 +7,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   docker_tag_updater.helpers.datetime
    docker_tag_updater.helpers.lscr
    docker_tag_updater.helpers.regex_rules
 

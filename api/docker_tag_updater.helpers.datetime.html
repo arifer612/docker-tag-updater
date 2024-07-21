@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="docker_tag_updater" href="docker_tag_updater.html" /><link rel="prev" title="Documentation for docker-tag-updater" href="../index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="docker_tag_updater.helpers.lscr" href="docker_tag_updater.helpers.lscr.html" /><link rel="prev" title="docker_tag_updater.helpers" href="docker_tag_updater.helpers.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>docker_tag_updater - docker-tag-updater 0.1.0 documentation</title>
+        <title>docker_tag_updater.helpers.datetime - docker-tag-updater 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/css/sphinx-toolbox.css" />
@@ -149,7 +149,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -174,10 +174,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">docker_tag_updater</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of docker_tag_updater</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="docker_tag_updater.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of docker_tag_updater</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="docker_tag_updater.helpers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of docker_tag_updater.helpers</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.helpers.datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers.datetime</span></code></a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">docker_tag_updater</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of docker_tag_updater</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="docker_tag_updater.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of docker_tag_updater</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current has-children"><a class="reference internal" href="docker_tag_updater.helpers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of docker_tag_updater.helpers</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers.datetime</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.helpers.lscr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers.lscr</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.helpers.regex_rules.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers.regex_rules</span></code></a></li>
 </ul>
@@ -216,44 +216,29 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="docker-tag-updater">
-<h1>docker_tag_updater<a class="headerlink" href="#docker-tag-updater" title="Link to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="docker_tag_updater.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="docker_tag_updater.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="docker_tag_updater.helpers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.helpers.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.helpers.html#module-docker_tag_updater.helpers">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="docker_tag_updater.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="docker_tag_updater.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.parser</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.parser.html#docker_tag_updater.parser.ivc_parser"><code class="docutils literal notranslate"><span class="pre">ivc_parser</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="docker_tag_updater.skopeo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.skopeo</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.skopeo.html#docker_tag_updater.skopeo.compare_versions"><code class="docutils literal notranslate"><span class="pre">compare_versions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.skopeo.html#docker_tag_updater.skopeo.image_version"><code class="docutils literal notranslate"><span class="pre">image_version()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.skopeo.html#docker_tag_updater.skopeo.inspect"><code class="docutils literal notranslate"><span class="pre">inspect()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="docker_tag_updater.skopeo.html#docker_tag_updater.skopeo.parse"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="docker_tag_updater.html#module-docker_tag_updater">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</div>
+          <section id="module-docker_tag_updater.helpers.datetime">
+<span id="docker-tag-updater-helpers-datetime"></span><h1><a class="reference internal" href="#module-docker_tag_updater.helpers.datetime" title="docker_tag_updater.helpers.datetime"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers.datetime</span></code></a><a class="headerlink" href="#module-docker_tag_updater.helpers.datetime" title="Link to this heading">#</a></h1>
+<p>RegexRules object for datetime-like versions.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="docker_tag_updater.helpers.datetime.yymmddRules">
+<span class="sig-name descname"><span class="pre">yymmddRules</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="docker_tag_updater.helpers.regex_rules.html#docker_tag_updater.helpers.regex_rules.RegexRules" title="docker_tag_updater.helpers.regex_rules.RegexRules"><span class="pre">RegexRules</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'yymmdd':</span> <span class="pre">'.*(?P&lt;major&gt;\\d{2})(?P&lt;minor&gt;\\d{2})(?P&lt;patch&gt;\\d{2})'}</span></em><a class="headerlink" href="#docker_tag_updater.helpers.datetime.yymmddRules" title="Link to this definition">#</a></dt>
+<dd><p>RegexRules for version strings of the type YYMMDD.</p>
+<p>This object has the following equivalent aliases: yymmdd and YYMMDD.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="docker_tag_updater.helpers.datetime.yyyymmddRules">
+<span class="sig-name descname"><span class="pre">yyyymmddRules</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="docker_tag_updater.helpers.regex_rules.html#docker_tag_updater.helpers.regex_rules.RegexRules" title="docker_tag_updater.helpers.regex_rules.RegexRules"><span class="pre">RegexRules</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'yyyymmdd':</span> <span class="pre">'.*(?P&lt;major&gt;\\d{4})(?P&lt;minor&gt;\\d{2})(?P&lt;patch&gt;\\d{2})'}</span></em><a class="headerlink" href="#docker_tag_updater.helpers.datetime.yyyymmddRules" title="Link to this definition">#</a></dt>
+<dd><p>RegexRules for version strings of the type YYYYMMDD.</p>
+<p>This object has the following equivalent aliases: yyyymmdd and YYYYMMDD.</p>
+</dd></dl>
+
 </section>
 
         </article>
@@ -261,23 +246,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="docker_tag_updater.html">
+          <a class="next-page" href="docker_tag_updater.helpers.lscr.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers.lscr</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../index.html">
+          <a class="prev-page" href="docker_tag_updater.helpers.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers</span></code></div>
                 
               </div>
             </a>
@@ -299,8 +284,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">docker_tag_updater.helpers.datetime</span></code></a><ul>
+<li><a class="reference internal" href="#docker_tag_updater.helpers.datetime.yymmddRules"><code class="docutils literal notranslate"><span class="pre">yymmddRules</span></code></a></li>
+<li><a class="reference internal" href="#docker_tag_updater.helpers.datetime.yyyymmddRules"><code class="docutils literal notranslate"><span class="pre">yyyymmddRules</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
