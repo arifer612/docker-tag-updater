@@ -70,3 +70,67 @@ def test_lscr_parser_as_default():
         "minor": "2",
         "patch": "3",
     }
+
+
+def test_yymmdd_parser_standard():
+    """Parse a standard YYMMDD version string with the yymmdd rule."""
+    vstring = "24.06.01"
+    assert helpers.parse_version(vstring, helpers.rules, "yymmdd") == {
+        "major": "24",
+        "minor": "06",
+        "patch": "01",
+    }
+
+def test_yymmdd_parser_longstring():
+    """Parse a standard YYYYMMDD version string with the yymmdd rule."""
+    vstring = "20240601"
+    assert helpers.parse_version(vstring, helpers.rules, "yymmdd") == {
+        "major": "24",
+        "minor": "06",
+        "patch": "01",
+    }
+
+def test_yymmdd_parser_invalid_string_length():
+    """Parse an invalid MMDD version string with the yymmdd rule."""
+    vstring = "0601"
+    with pytest.raises(ValueError):
+        helpers.parse_version(vstring, helpers.rules, "yymmdd")
+
+def test_yymmdd_parser_semver_string():
+    """Parse an semantic version string with the yymmdd rule."""
+    vstring = "version-1.2.3-ls789"
+    assert helpers.parse_version(vstring, helpers.rules, "yymmdd") == {
+        "major": "1",
+        "minor": "2",
+        "patch": "3",
+    }
+
+def test_yyyymmdd_parser_standard():
+    """Parse a standard YYYYMMDD version string with the yyyymmdd rule."""
+    vstring = "20240601"
+    assert helpers.parse_version(vstring, helpers.rules, "yyyymmdd") == {
+        "major": "2024",
+        "minor": "06",
+        "patch": "01",
+    }
+
+def test_yyyymmdd_parser_longstring():
+    """Parse a standard YYYYYYMMDD version string with the yyyymmdd rule."""
+    vstring = "240601"
+    with pytest.raises(ValueError):
+        assert helpers.parse_version(vstring, helpers.rules, "yyyymmdd")
+
+def test_yyyymmdd_parser_invalid_string_length():
+    """Parse an invalid MMDD version string with the yyyymmdd rule."""
+    vstring = "0601"
+    with pytest.raises(ValueError):
+        helpers.parse_version(vstring, helpers.rules, "yyyymmdd")
+
+def test_yyyymmdd_parser_semver_string():
+    """Parse an semantic version string with the yyyymmdd rule."""
+    vstring = "version-1.2.3-ls789"
+    assert helpers.parse_version(vstring, helpers.rules, "yyyymmdd") == {
+        "major": "1",
+        "minor": "2",
+        "patch": "3",
+    }
