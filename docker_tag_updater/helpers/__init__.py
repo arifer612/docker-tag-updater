@@ -5,19 +5,24 @@ from typing import Any
 
 from .lscr import lscrRules
 from .regex_rules import DefaultRules, RegexRules
+from .datetime import yymmddRules, yyyymmddRules
 
-rules: RegexRules = DefaultRules + lscrRules
+rules: RegexRules = \
+    DefaultRules + lscrRules + yymmddRules + yyyymmddRules
 """The most general set of rules.
 
 Supports:
 
 - Default semantic versions
 - Linuxserver semantic versions
+- Datetime-like version strings
 
 See also
 --------
 regex_rules.DefaultRules : For the aliases for the default set of rules.
 lscr.lscrRules : For the aliases for the Linuxserver set of rules.
+datetime.yymmddRules: For the aliases for the datetime-like set of rules.
+datetime.yyyymmddRules: For the aliases for the datetime-like set of rules.
 
 """
 
