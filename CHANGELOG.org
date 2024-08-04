@@ -3,8 +3,15 @@ All notable changes to this project will be documented in this file. See
 [[https://github.com/absolute-version/commit-and-tag-version][commit-and-tag-version]]
 for commit guidelines.
 
+** [[https://github.com/arifer612/docker-tag-updater/compare/v1.1.0...v1.1.1][1.1.1]]
+(2024-08-04)
+*** Bug Fixes
+- get all available rules from the helpers.rules object
+  ([[https://github.com/arifer612/docker-tag-updater/commit/fa174b8bcf935e135c0336afc67a8c22bdf5b372][fa174b8]])
+
 ** [[https://github.com/arifer612/docker-tag-updater/compare/v1.0.1...v1.1.0][1.1.0]]
 (2024-07-21)
+
 *** Features
 - *helper:* add datetime-like regex rules
   ([[https://github.com/arifer612/docker-tag-updater/commit/f0c123f9b195d90513f57283644dac0452c08bff][f0c123f]])
