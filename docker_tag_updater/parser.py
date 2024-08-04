@@ -5,6 +5,7 @@ This module defines the parser that is used for the CLI tool (image-version-chec
 """
 
 import argparse
+from .helpers import rules
 
 
 ivc_parser = argparse.ArgumentParser(
@@ -46,8 +47,11 @@ ivc_parser.add_argument(
 ivc_parser.add_argument(
     "-r",
     "--rule",
-    choices=["default", "lscr"],
-    help="The semver regex rule.",
+    choices=list(rules.keys()),
+    help=f"""
+    The semver regex rule. Other available options are their aliases, i.e.,
+    {list(rules._rule_aliases.keys())}
+    """,
     default="default",
 )
 ivc_parser.add_argument(
