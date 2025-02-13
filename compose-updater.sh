@@ -123,7 +123,7 @@ if $(! grep -q $IMAGE_NAME $COMPOSE_FILENAME); then
 fi
 
 IMAGE_VERSIONS="$(
-    grep $IMAGE_NAME $COMPOSE_FILENAME | \
+    grep "image:.*${IMAGE_NAME}" $COMPOSE_FILENAME | \
     cut -d ':' -f 2- | \
     tr -d '[:blank:]' | \
     uniq
